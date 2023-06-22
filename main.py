@@ -34,7 +34,7 @@ def train_vae(model, train_loader, optimizer, device, args, epoch):
         total_loss += loss
 
         if i%50 == 0:
-            print('train iter {}/{}: loss = {:.2f}, decoder loss = {:.2f}, encoder loss = {:.2f}'.format(i,len(train_loader), loss, decoder_loss, encoder_loss))
+            print('train iter {}/{}: loss = {:.2f}, decoder loss = {:.2f}, encoder loss = {:.2f}'.format(i,len(train_loader), loss/train_loader.batch_size, decoder_loss/train_loader.batch_size, encoder_loss/train_loader.batch_size))
             f, axarr = plt.subplots(1, 2)
             axarr[0].imshow(x[1,:,:].cpu())
             axarr[1].imshow(x_hat[1,:,:].detach().cpu())
@@ -55,7 +55,7 @@ def test_vae(model, test_loader, device, args, epoch):
             loss, decoder_loss, encoder_loss = VAE.vae_loss(x_hat, mu, sigma, x)
             total_loss += loss
             if i % 30 == 0:
-                print('test iter {}/{}: loss = {:.2f}, decoder loss = {:.2f}, encoder loss = {:.2f}'.format(i, len(test_loader), loss, decoder_loss, encoder_loss))
+                print('test iter {}/{}: loss = {:.2f}, decoder loss = {:.2f}, encoder loss = {:.2f}'.format(i, len(test_loader), loss/test_loader.batch_size, decoder_loss/test_loader.batch_size, encoder_loss/test_loader.batch_size))
                 f, axarr = plt.subplots(1, 2)
                 axarr[0].imshow(x[1, :, :].cpu())
                 axarr[1].imshow(x_hat[1, :, :].detach().cpu())
