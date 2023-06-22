@@ -150,7 +150,7 @@ if __name__ == "__main__":
                     total_loss_validation = test_vae(model, test_loader, device, args, epoch)
                     avg_loss_test = total_loss_validation/len(test_dataset)
 
-                    print('Epoch {}: mean train loss = {:.3f}, mean validation loss = {:.3f}'.format(
+                    print('\nEpoch {}: mean train loss = {:.3f}, mean validation loss = {:.3f}\n\n'.format(
                         epoch + 1, avg_loss_train, avg_loss_test))
 
                     train_loss_per_epoch.append(avg_loss_train)
@@ -189,6 +189,7 @@ if __name__ == "__main__":
             num_of_train_samples = [100, 600, 1000, 3000]
             if not os.path.exists(os.path.join(args.output, 'svm_models')):
                 os.mkdir(os.path.join(args.output, 'svm_models'))
+            print('\nclassification results:')
             for n_samples in num_of_train_samples:
                 svm_model = train_svm(int(n_samples / num_of_classes), num_of_classes, model, train_loader, 28, 28)
                 test_accuracy = test_svm(svm_model, model, test_loader)
